@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install dependencies
-brew install zsh tmux neovim/neovim/neovim python3 ag reattach-to-user-namespace
+brew install zsh tmux neovim/neovim/neovim python3 ag reattach-to-user-namespace antigen
 brew tap caskroom/cask
 brew cask install iterm2
 
@@ -14,7 +14,7 @@ brew tap caskroom/fonts
 brew cask install font-fira-code
 
 # Set zsh as default shell
-chsh -s /usr/local/bin/zsh
+sudo dscl . -create /Users/$USER UserShell /usr/local/bin/zsh
 
 # Remove existing configurations
 rm -rf ~/.vim ~/.vimrc ~/.zshrc ~/.tmux ~/.tmux.conf ~/.config/nvim 2> /dev/null
@@ -23,10 +23,9 @@ rm -rf ~/.vim ~/.vimrc ~/.zshrc ~/.tmux ~/.tmux.conf ~/.config/nvim 2> /dev/null
 mkdir -p ~/.config ~/.config/nvim
 
 # Symlink configs
-ln -s ~/dotfiles/zshrc ~/.zshrc
-ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
-ln -s ~/dotfiles/vimrc ~/.config/nvim/init.vim
+ln -s $PWD/zshrc ~/.zshrc
+ln -s $PWD/tmux.conf ~/.tmux.conf
+ln -s $PWD/vimrc ~/.config/nvim/init.vim
 
 # Use nvim for further configuration
 alias vim="nvim"
-
