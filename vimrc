@@ -74,17 +74,22 @@ nnoremap <silent> <C-l> <C-w>l
 
 " Plugins
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'Shougo/denite.vim'
+Plug 'shougo/denite.nvim'
+Plug 'tpope/vim-repeat'
 Plug 'dracula/vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
 Plug 'mhinz/vim-grepper'
-Plug 'vbundles/nerdtree'
+Plug 'scrooloose/nerdtree'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'w0rp/ale'
 Plug 'justinmk/vim-sneak'
+Plug 'tpope/vim-surround'
+Plug 'pangloss/vim-javascript'
+Plug 'tpope/vim-fugitive'
+Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 call plug#end()
 
@@ -95,6 +100,9 @@ color Dracula
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
 set laststatus=2
+
+" CtrlP config
+nnoremap <silent> <c-p> :CtrlP<CR>
 
 " Shortcuts for Grepper
 nnoremap <Leader>fp :Grepper<Space>-query<Space>
@@ -112,3 +120,19 @@ xmap f <Plug>Sneak_f
 xmap F <Plug>Sneak_F
 omap f <Plug>Sneak_f
 omap F <Plug>Sneak_F
+
+" Ale config (linting)
+let g:ale_linters={
+\ 'javascript': ['eslint'],
+\}
+let g:ale_linters_explicit=1
+
+" JavaScript settings
+augroup javascript_folding
+  au!
+  au FileType javascript setlocal foldmethod=syntax
+  au FileType javascript setlocal conceallevel=1
+augroup END
+
+" Remove trailing whitespace
+autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif

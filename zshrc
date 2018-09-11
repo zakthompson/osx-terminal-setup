@@ -1,10 +1,6 @@
 autoload colors zsh/terminfo
 colors
 
-precmd() { print "" }
-PS1="$⟩ "
-RPS1="%{$fg[magenta]%}%100<...<%~%<<%{$reset_color%}"
-
 if [ "$TMUX" = "" ]; then tmux; fi
 
 setopt auto_cd
@@ -14,9 +10,11 @@ alias git status='nocorrect git status'
 
 source $(brew --prefix)/share/antigen/antigen.zsh
 
+antigen bundle mafredri/zsh-async
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle git
+antigen bundle sindresorhus/pure
 antigen apply
 
 alias vim="nvim"
