@@ -5,10 +5,14 @@ set encoding=utf8
 set nomodeline
 
 " Stop word wrapping
-set nowrap
+"set nowrap
 
 " Except... on Markdown. That's good stuff.
-autocmd FileType markdown setlocal wrap
+"autocmd FileType markdown setlocal wrap
+
+" Up and down more logical with g
+nnoremap <silent> k gk
+nnoremap <silent> j gj
 
 " Adjust system undo levels
 set undolevels=100
@@ -88,9 +92,14 @@ Plug 'w0rp/ale'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-surround'
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 Plug 'tpope/vim-fugitive'
 Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
+Plug 'mattn/emmet-vim'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'cohama/lexima.vim'
 call plug#end()
 
 " Set color
@@ -134,5 +143,32 @@ augroup javascript_folding
   au FileType javascript setlocal conceallevel=1
 augroup END
 
+" Emmet settings
+let g:user_emmet_settings = {
+\ 'javascript.jsx': {
+\   'extends': 'jsx',
+\ },
+\}
+
 " Remove trailing whitespace
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
+
+" Neosnippet settings
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab-like snippets behavior.
+imap <expr><TAB>
+\ pumvisible() ? "\<C-n>" :
+\ neosnippet#expandable_or_jumpable() ?
+\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
