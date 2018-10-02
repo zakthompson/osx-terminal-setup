@@ -78,9 +78,10 @@ nnoremap <silent> <C-l> <C-w>l
 
 " Plugins
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-repeat'
-Plug 'dracula/vim'
+Plug 'drewtempelmeyer/palenight.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -100,14 +101,21 @@ Plug 'mattn/emmet-vim'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'cohama/lexima.vim'
+Plug 'jparise/vim-graphql'
 call plug#end()
 
 " Set color
-color Dracula
+set background=dark
+color palenight
+if (has("termguicolors"))
+  set termguicolors
+endif
+let g:palenight_terminal_italics=1
 
 " Configure airline (bottom bar)
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
+let g:airline_theme='minimalist'
 set laststatus=2
 
 " CtrlP config
@@ -172,3 +180,5 @@ if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
 
+" Hide tmux status bar on enter, reveal on leave
+autocmd VimEnter,Vimleave * silent !tmux set status
