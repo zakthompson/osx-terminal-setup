@@ -4,11 +4,8 @@ set encoding=utf8
 " No special per file vim override configs
 set nomodeline
 
-" Stop word wrapping
-"set nowrap
-
-" Except... on Markdown. That's good stuff.
-"autocmd FileType markdown setlocal wrap
+" Highlight current line
+set cursorline
 
 " Up and down more logical with g
 nnoremap <silent> k gk
@@ -16,6 +13,10 @@ nnoremap <silent> j gj
 
 " Adjust system undo levels
 set undolevels=100
+
+" Better search
+set ignorecase
+set smartcase
 
 " Use system clipboard
 set clipboard=unnamed
@@ -27,7 +28,7 @@ set shiftwidth=2
 set expandtab
 
 " Don't let Vim hide characters or make loud dings
-set conceallevel=1
+set conceallevel=0
 set noerrorbells
 
 " Number gutter
@@ -81,7 +82,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-repeat'
-Plug 'drewtempelmeyer/palenight.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -102,24 +102,23 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'cohama/lexima.vim'
 Plug 'jparise/vim-graphql'
+Plug 'arcticicestudio/nord-vim'
+Plug 'digitaltoad/vim-pug'
 call plug#end()
 
 " Set color
-set background=dark
-color palenight
-if (has("termguicolors"))
-  set termguicolors
-endif
-let g:palenight_terminal_italics=1
+let g:nord_italic = 1
+let g:nord_underline = 1
+colorscheme nord
 
 " Configure airline (bottom bar)
 let g:airline#extensions#tabline#enabled=1
 let g:airline_powerline_fonts=1
-let g:airline_theme='minimalist'
 set laststatus=2
 
 " CtrlP config
 nnoremap <silent> <c-p> :CtrlP<CR>
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 
 " Shortcuts for Grepper
 nnoremap <Leader>fp :Grepper<Space>-query<Space>
@@ -141,8 +140,10 @@ omap F <Plug>Sneak_F
 " Ale config (linting)
 let g:ale_linters={
 \ 'javascript': ['eslint'],
+\ 'jsx': ['eslint'],
 \}
 let g:ale_linters_explicit=1
+let g:ale_javascript_eslint_suppress_missing_config=1
 
 " JavaScript settings
 augroup javascript_folding
@@ -175,10 +176,6 @@ imap <expr><TAB>
 smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
-
-" Hide tmux status bar on enter, reveal on leave
-autocmd VimEnter,Vimleave * silent !tmux set status
+" Comment settings
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1

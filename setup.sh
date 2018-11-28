@@ -8,6 +8,7 @@ brew cask install iterm2
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 pip3 install neovim
+pip3 install powerline-status
 
 # Install font
 brew tap caskroom/fonts
