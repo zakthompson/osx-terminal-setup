@@ -126,6 +126,7 @@ alias vim="nvim"
 alias ls='ls -GFhlxort'
 alias hg='history | grep "$@"'
 alias work='cd ~/Dropbox/Workspace'
+alias bridgit='cd ~/repos/bridgit'
 alias thompsons='ssh zak@thethompsonfamily.ca'
 alias nvm_update='echo "About to update NVM:"; cd $NVM_DIR; git fetch -p; git checkout \$(git describe --tags \`git rev-list --tags --max-count=1\`); source $NVM_DIR/nvm.sh; cd $OLDPWD'
 alias pi='ssh pi@zakthompson.me'
