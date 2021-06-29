@@ -19,7 +19,7 @@ set ignorecase
 set smartcase
 
 " Use system clipboard
-set clipboard=unnamed
+set clipboard=
 
 " Set tab width and convert tabs to spaces
 set tabstop=2
@@ -40,8 +40,8 @@ set hlsearch
 set scrolloff=1
 set sidescrolloff=5
 
-" Disable mouse support
-set mouse=r
+" Mouse support only in normal mode
+set mouse=n
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " Resize panes with arrow keys
@@ -86,7 +86,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
 Plug 'mhinz/vim-grepper'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'scrooloose/nerdtree'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-repeat'
 Plug 'justinmk/vim-sneak'
@@ -95,6 +96,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'cohama/lexima.vim'
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'ryanoasis/vim-devicons'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " Set color
@@ -105,7 +108,7 @@ colorscheme nord
 " IndentLine settings
 let g:indentLine_enabled = 1
 let g:indentLine_char = "|"
-let g:indentLine_conceallevel = 1
+let g:indentLine_conceallevel = 0
 
 " Configure airline (bottom bar)
 let g:airline#extensions#tabline#enabled=1
@@ -134,7 +137,11 @@ augroup javascript_folding
   au!
   au FileType javascript setlocal foldmethod=syntax
   au FileType javascript setlocal conceallevel=1
+  au FileType typescript setlocal foldmethod=syntax
+  au FileType typescript setlocal conceallevel=1
 augroup END
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
 
 " Remove trailing whitespace
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
@@ -176,3 +183,16 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+" Preview markdown using Grip
+noremap <silent> <leader>om :call OpenMarkdownPreview()<cr>
+
+function! OpenMarkdownPreview() abort
+  if exists('s:markdown_job_id') && s:markdown_job_id > 0
+    call jobstop(s:markdown_job_id)
+    unlet s:markdown_job_id
+  endif
+  let s:markdown_job_id = jobstart('grip ' . shellescape(expand('%:p')))
+  if s:markdown_job_id <= 0 | return | endif
+  call system('open http://localhost:6419')
+endfunction

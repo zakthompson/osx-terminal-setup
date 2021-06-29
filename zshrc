@@ -106,7 +106,7 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time  status  time)
 HIST_STAMPS="mm/dd/yyyy"
 DISABLE_UPDATE_PROMPT=true
 
-if [ "$TMUX" = "" ]; then tmux; fi
+if [ "$TMUX" = "" ]; then tmux attach || tmux new -s main; fi
 
 setopt auto_cd
 
@@ -119,6 +119,8 @@ antigen bundle mafredri/zsh-async
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle git
+antigen bundle bobsoppe/zsh-ssh-agent
+antigen bundle agkozak/zsh-z
 antigen theme bhilburn/powerlevel9k powerlevel9k
 antigen apply
 
@@ -128,7 +130,30 @@ alias hg='history | grep "$@"'
 alias nvm_update='echo "About to update NVM:"; cd $NVM_DIR; git fetch -p; git checkout \$(git describe --tags \`git rev-list --tags --max-count=1\`); source $NVM_DIR/nvm.sh; cd $OLDPWD'
 alias pi='ssh pi@zakthompson.me'
 alias fire='ssh zak@thisfireinside.com'
+alias work='mosh zak@zakthompson.work'
+flhex() {
+  sudo dfu-programmer atmega16u2 erase
+  sudo dfu-programmer atmega16u2 flash "$1"
+  sudo dfu-programmer atmega16u2 reset
+}
 
 export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Automatic nvm version switching
+autoload -U add-zsh-hook
+load-nvmrc() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  elif [[ $(nvm version) != $(nvm version default)  ]]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc
+
+export KUBECONFIG="/Users/zak/.kube/fi.yaml"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
