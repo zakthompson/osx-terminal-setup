@@ -1,3 +1,6 @@
+" Fix colors
+set termguicolors
+
 " Set standard file encoding
 set encoding=utf8
 
@@ -60,8 +63,8 @@ imap <right> <nop>
 nmap <Leader><Leader> <c-^>
 
 " Use tab to naturally switch between buffers
-" nnoremap <Tab> :bnext!<CR>
-" nnoremap <S-Tab> :bprev!<CR><Paste>
+nnoremap <Tab> :bnext!<CR>
+nnoremap <S-Tab> :bprev!<CR><Paste>
 
 " Highlight matching parentheses
 highlight MatchParen ctermbg=4
@@ -79,7 +82,7 @@ nnoremap <silent> <C-l> <C-w>l
 " Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'shougo/denite.nvim'
-Plug 'arcticicestudio/nord-vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
@@ -101,9 +104,7 @@ Plug 'sheerun/vim-polyglot'
 call plug#end()
 
 " Set color
-let g:nord_italic = 1
-let g:nord_underline = 1
-colorscheme nord
+colorscheme dracula
 
 " IndentLine settings
 let g:indentLine_enabled = 1
