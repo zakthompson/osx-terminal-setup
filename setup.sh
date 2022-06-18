@@ -1,13 +1,18 @@
 #!/bin/bash
 
 # Install dependencies
-brew install zsh tmux neovim python3 ag
+brew install zsh tmux neovim python3 ag yarn tree-sitter luajit ripgrep
 brew tap homebrew/cask-cask
 
+# Neovim setup
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 pip3 install neovim
 pip3 install powerline-status
+yarn global add typescript typescript-language-server
+
+# tmux setup
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Install font
 brew tap homebrew/cask-fonts
