@@ -16,7 +16,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # Install font
 brew tap homebrew/cask-fonts
-brew cask install font-firacode-nerd-font
+brew cask install font-jetbrains-mono-nerd-font
 
 # Set zsh as default shell
 chsh -s /usr/local/bin/zsh

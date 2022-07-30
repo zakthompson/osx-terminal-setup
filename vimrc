@@ -10,6 +10,9 @@ set nomodeline
 " Highlight current line
 set cursorline
 
+" Faster hold-cursor times
+set updatetime=100
+
 " Up and down more logical with g
 nnoremap <silent> k gk
 nnoremap <silent> j gj
@@ -82,7 +85,6 @@ nnoremap <silent> <C-l> <C-w>l
 " Plugins
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'neovim/nvim-lspconfig'
-Plug 'glepnir/lspsaga.nvim', { 'branch': 'main' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -94,6 +96,9 @@ Plug 'hrsh7th/cmp-cmdline', { 'branch': 'main' }
 Plug 'hrsh7th/nvim-cmp', { 'branch': 'main' }
 Plug 'hrsh7th/cmp-vsnip', { 'branch': 'main' }
 Plug 'hrsh7th/vim-vsnip'
+Plug 'weilbith/nvim-code-action-menu', { 'branch': 'main' }
+Plug 'kosayoda/nvim-lightbulb'
+Plug 'antoinemadec/FixCursorHold.nvim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-airline/vim-airline'
@@ -101,7 +106,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-surround'
 call plug#end()
 
 " Set color
@@ -114,10 +119,6 @@ set laststatus=2
 
 " Remove trailing whitespace
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
-
-" Comment settings
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
 
 lua << EOF
 -- LSP config
@@ -141,7 +142,7 @@ local on_attach = function(client, bufnr)
   end, bufopts)
   vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  -- vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
   vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
 
@@ -157,72 +158,8 @@ nvim_lsp.tsserver.setup {
   on_attach = on_attach
 }
 
-local saga = require 'lspsaga'
-
-saga.init_lsp_saga {
-  error_sign = '',
-  warn_sign = '',
-  hint_sign = '',
-  infor_sign = '',
-  border_style = "round",
-}
-
-nvim_lsp.diagnosticls.setup {
-  on_attach = on_attach,
-  filetypes = { 'javascript', 'javascriptreact', 'json', 'typescript', 'typescriptreact', 'css', 'less', 'scss', 'markdown', 'pandoc' },
-  init_options = {
-    linters = {
-      eslint = {
-        command = 'eslint_d',
-        rootPatterns = { '.git' },
-        debounce = 100,
-        args = { '--stdin', '--stdin-filename', '%filepath', '--format', 'json' },
-        sourceName = 'eslint_d',
-        parseJson = {
-          errorsRoot = '[0].messages',
-          line = 'line',
-          column = 'column',
-          endLine = 'endLine',
-          endColumn = 'endColumn',
-          message = '[eslint] ${message} [${ruleId}]',
-          security = 'severity'
-        },
-        securities = {
-          [2] = 'error',
-          [1] = 'warning'
-        }
-      },
-    },
-    filetypes = {
-      javascript = 'eslint',
-      javascriptreact = 'eslint',
-      typescript = 'eslint',
-      typescriptreact = 'eslint',
-    },
-    formatters = {
-      eslint_d = {
-        command = 'eslint_d',
-        args = { '--stdin', '--stdin-filename', '%filename', '--fix-to-stdout' },
-        rootPatterns = { '.git' },
-      },
-      prettier = {
-        command = 'prettier',
-        args = { '--stdin-filepath', '%filename' }
-      }
-    },
-    formatFiletypes = {
-      css = 'prettier',
-      javascript = 'eslint_d',
-      javascriptreact = 'eslint_d',
-      json = 'prettier',
-      scss = 'prettier',
-      less = 'prettier',
-      typescript = 'eslint_d',
-      typescriptreact = 'eslint_d',
-      json = 'prettier',
-      markdown = 'prettier',
-    }
-  }
+nvim_lsp.eslint.setup {
+ on_attach = on_attach
 }
 
 require'nvim-treesitter.configs'.setup {
@@ -236,12 +173,8 @@ require'nvim-treesitter.configs'.setup {
   },
   ensure_installed = {
     "tsx",
-    "toml",
-    "fish",
-    "php",
     "json",
     "yaml",
-    "swift",
     "html",
     "scss"
   },
@@ -323,19 +256,8 @@ local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protoco
 require('lspconfig')['tsserver'].setup {
   capabilities = capabilities
 }
+
 EOF
-
-" Show hover doc
-nnoremap <silent>K :Lspsaga hover_doc<CR>
-
-" Signature help
-inoremap <silent> <C-k> <Cmd>Lspsaga signature_help<CR>
-
-" Async LSP finder
-nnoremap <silent> gh <Cmd>Lspsaga lsp_finder<CR>
-
-" Jump through diagnostics
-nnoremap <silent> <C-j> :Lspsaga diagnostic_jump_next<CR>
 
 " Autocompletion config
 set completeopt=menuone,noinsert,noselect
@@ -347,3 +269,7 @@ nnoremap <silent> ;f <cmd>Telescope find_files<cr>
 nnoremap <silent> ;r <cmd>Telescope live_grep<cr>
 nnoremap <silent> \\ <cmd>Telescope buffers<cr>
 nnoremap <silent> ;; <cmd>Telescope help_tags<cr>
+
+" Code actions
+autocmd CursorHold,CursorHoldI * lua require('nvim-lightbulb').update_lightbulb()
+nnoremap <Space>ca <Cmd>CodeActionMenu<CR>
