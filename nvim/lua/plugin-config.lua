@@ -149,3 +149,6 @@ require('gitsigns').setup {
   end
 }
 vim.cmd [[ highlight link GitSignsCurrentLineBlame Visual ]]
+
+-- Comment.nvim
+require('Comment').setup()
