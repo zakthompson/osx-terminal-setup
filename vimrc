@@ -84,29 +84,29 @@ nnoremap <silent> <C-l> <C-w>l
 
 " Plugins
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'hrsh7th/cmp-nvim-lsp', { 'branch': 'main' }
-Plug 'hrsh7th/cmp-buffer', { 'branch': 'main' }
-Plug 'hrsh7th/cmp-path', { 'branch': 'main' }
-Plug 'hrsh7th/cmp-cmdline', { 'branch': 'main' }
-Plug 'hrsh7th/nvim-cmp', { 'branch': 'main' }
-Plug 'hrsh7th/cmp-vsnip', { 'branch': 'main' }
-Plug 'hrsh7th/vim-vsnip'
-Plug 'weilbith/nvim-code-action-menu', { 'branch': 'main' }
-Plug 'kosayoda/nvim-lightbulb'
-Plug 'antoinemadec/FixCursorHold.nvim'
-Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'airblade/vim-gitgutter'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'preservim/nerdtree'
-Plug 'ryanoasis/vim-devicons'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'tpope/vim-surround'
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'nvim-lua/popup.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
+" Plug 'hrsh7th/cmp-nvim-lsp', { 'branch': 'main' }
+" Plug 'hrsh7th/cmp-buffer', { 'branch': 'main' }
+" Plug 'hrsh7th/cmp-path', { 'branch': 'main' }
+" Plug 'hrsh7th/cmp-cmdline', { 'branch': 'main' }
+" Plug 'hrsh7th/nvim-cmp', { 'branch': 'main' }
+" Plug 'hrsh7th/cmp-vsnip', { 'branch': 'main' }
+" Plug 'hrsh7th/vim-vsnip'
+" Plug 'weilbith/nvim-code-action-menu', { 'branch': 'main' }
+" Plug 'kosayoda/nvim-lightbulb'
+" Plug 'antoinemadec/FixCursorHold.nvim'
+" Plug 'dracula/vim', { 'as': 'dracula' }
+" Plug 'airblade/vim-gitgutter'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+" Plug 'preservim/nerdtree'
+" Plug 'ryanoasis/vim-devicons'
+" Plug 'christoomey/vim-tmux-navigator'
+" Plug 'tpope/vim-surround'
 call plug#end()
 
 " Set color

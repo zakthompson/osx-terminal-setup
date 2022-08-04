@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Install dependencies
-brew install zsh tmux neovim python3 ag yarn tree-sitter luajit ripgrep
+brew install zsh tmux neovim ag yarn tree-sitter luajit ripgrep rustup
 brew tap homebrew/cask-cask
 
+# Inctall rust/cargo
+rustup-init -y
+
 # Neovim setup
-curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
-  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-pip3 install neovim
-pip3 install powerline-status
-yarn global add typescript typescript-language-server
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # tmux setup
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
@@ -38,7 +38,7 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/p
 # Symlink configs
 ln -s $PWD/zshrc ~/.zshrc
 ln -s $PWD/tmux.conf ~/.tmux.conf
-ln -s $PWD/vimrc ~/.config/nvim/init.vim
+ln -s $PWD/nvim ~/.config/nvim
 
 # Use nvim for further configuration
 alias vim="nvim"
