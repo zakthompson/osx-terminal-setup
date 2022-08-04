@@ -1,25 +1,17 @@
-function map(mode, shortcut, command)
+local function map(mode, shortcut, command)
   vim.keymap.set(mode, shortcut, command, { silent = true })
 end
 
-function nmap(shortcut, command)
+local function nmap(shortcut, command)
   map('n', shortcut, command)
 end
 
-function imap(shortcut, command)
+local function imap(shortcut, command)
   map('i', shortcut, command)
 end
 
-function vmap(shortcut, command)
+local function vmap(shortcut, command)
   map('v', shortcut, command)
-end
-
-function cmap(shortcut, command)
-  map('c', shortcut, command)
-end
-
-function tmap(shortcut, command)
-  map('t', shortcut, command)
 end
 
 -- More logical up/down
@@ -56,3 +48,6 @@ nmap('<C-h>', '<C-w>h')
 nmap('<C-j>', '<C-w>j')
 nmap('<C-k>', '<C-w>k')
 nmap('<C-l>', '<C-w>l')
+
+-- Misc
+nmap('<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
