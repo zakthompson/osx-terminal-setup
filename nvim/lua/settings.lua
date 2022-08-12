@@ -1,6 +1,3 @@
--- Set colorscheme
-vim.cmd('colorscheme dracula')
-
 -- Fix colors
 vim.opt.termguicolors = true
 

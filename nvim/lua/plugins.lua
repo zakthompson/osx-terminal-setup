@@ -3,7 +3,7 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- Colorscheme
-  use { 'dracula/vim', as = 'dracula' }
+  use { 'catppuccin/nvim', as = 'catppucin' }
 
   -- Status line
   use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
