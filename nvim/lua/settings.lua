@@ -32,6 +32,10 @@ vim.opt.softtabstop = 2
 vim.opt.shiftwidth = 2
 vim.opt.expandtab = true
 
+-- Smart indents
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+
 -- Number gutter
 vim.opt.number = true
 
@@ -44,3 +48,11 @@ vim.opt.sidescrolloff = 5
 
 -- Mouse support only in normal mode
 vim.opt.mouse = 'n'
+
+-- Always include sign column (prevents shifting on diagnostics/git)
+vim.opt.signcolumn = 'yes'
+
+-- Set diagnostics to sort by severity
+vim.diagnostic.config({
+  severity_sort = true
+})

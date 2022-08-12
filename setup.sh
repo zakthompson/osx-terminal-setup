@@ -3,8 +3,7 @@
 # Install dependencies
 brew install zsh tmux neovim ag yarn tree-sitter luajit ripgrep rustup
 brew tap homebrew/cask-cask
-
-# Inctall rust/cargo
+yarn global add stylelint eslint eslint_d prettier @fsouza/prettierd
 rustup-init -y
 
 # Neovim setup

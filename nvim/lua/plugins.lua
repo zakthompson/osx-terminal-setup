@@ -64,4 +64,28 @@ return require('packer').startup(function(use)
 
   -- Comments
   use { 'numToStr/Comment.nvim' }
+
+  -- Auto-formatting
+  use { 'mhartington/formatter.nvim' }
+
+  -- Some nice add-on LSP functionality
+  use { 'glepnir/lspsaga.nvim', branch = 'main' }
+
+  -- Pretty notifications
+  use { 'rcarriga/nvim-notify' }
+
+  -- Task runner
+  use { 'stevearc/overseer.nvim' }
+
+  -- Markdown preview
+  use {
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end
+  }
+
+  -- Hopping around text
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v2'
+  }
 end)
