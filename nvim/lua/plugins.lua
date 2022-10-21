@@ -5,11 +5,14 @@ return require('packer').startup(function(use)
   -- Colorscheme
   use { 'catppuccin/nvim', as = 'catppucin' }
 
+  -- Icons
+  use { 'nvim-tree/nvim-web-devicons' }
+
   -- Status line
-  use { 'nvim-lualine/lualine.nvim', requires = { 'kyazdani42/nvim-web-devicons', opt = true } }
+  use { 'nvim-lualine/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons', opt = true } }
 
   -- File browser
-  use { 'kyazdani42/nvim-tree.lua', requires = { 'kyazdani42/nvim-web-devicons' } }
+  use { 'nvim-tree/nvim-tree.lua', requires = { 'nvim-tree/nvim-web-devicons' } }
 
   -- Navigate between tmux panes
   use { "alexghergh/nvim-tmux-navigation" }

@@ -3,6 +3,9 @@ vim.g.catppuccin_flavour = 'mocha'
 require('catppuccin').setup()
 vim.cmd [[colorscheme catppuccin]]
 
+-- === nvim-web-devicons ===
+require('nvim-web-devicons').setup()
+
 -- === lualine ===
 require('lualine').setup {
   extensions = { 'nvim-tree' },
@@ -78,15 +81,6 @@ saga.init_lsp_saga {
 vim.keymap.set("n", "<Leader>rn", "<cmd>Lspsaga rename<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>gp", "<cmd>Lspsaga preview_definition<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>go", "<cmd>LSoutlineToggle<CR>", { silent = true })
-
--- Hover doc scrolling
-local action = require("lspsaga.action")
-vim.keymap.set("n", "<C-f>", function()
-  action.smart_scroll_with_saga(1)
-end, { silent = true })
-vim.keymap.set("n", "<C-b>", function()
-  action.smart_scroll_with_saga(-1)
-end, { silent = true })
 
 -- Float terminal
 local term = require("lspsaga.floaterm")
