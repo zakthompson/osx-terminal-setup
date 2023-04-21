@@ -78,7 +78,7 @@ vim.filetype.add({
 
 -- === lspsaga ===
 local saga = require('lspsaga')
-saga.init_lsp_saga {
+saga.setup {
   code_action_icon = '',
   code_action_lightbulb = {
     enable = true,
@@ -299,7 +299,9 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 vim.api.nvim_create_autocmd('User', {
   pattern = 'FormatterPre',
   group = formatGroup,
-  callback = vim.lsp.buf.formatting_sync
+  callback = function ()
+    vim.lsp.buf.format({async = false})
+	end
 })
 
 -- === overseer.vim ===
