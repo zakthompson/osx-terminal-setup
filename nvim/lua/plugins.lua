@@ -82,13 +82,13 @@ return require('packer').startup(function(use)
 
   -- Markdown preview
   use {
-    "iamcco/markdown-preview.nvim",
-    run = function() vim.fn["mkdp#util#install"]() end
+    'iamcco/markdown-preview.nvim',
+    run = function() vim.fn['mkdp#util#install']() end
   }
+  
+  -- Jump around fast
+  use { 'ggandor/leap.nvim' }
 
-  -- Hopping around text
-  use {
-    'phaazon/hop.nvim',
-    branch = 'v2'
-  }
+  -- Rsync for remote editing
+  use { 'kenn7/vim-arsync' }
 end)

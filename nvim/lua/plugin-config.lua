@@ -33,8 +33,12 @@ require('nvim-tmux-navigation').setup {
 
 -- === tree-sitter ===
 require('nvim-treesitter.configs').setup {
+  highlight = {
+    enable = true
+  },
   -- A list of parser names, or "all"
   ensure_installed = {
+    'astro',
     'bash',
     'css',
     'dockerfile',
@@ -66,6 +70,12 @@ require('nvim-treesitter.configs').setup {
   }
 }
 
+vim.filetype.add({
+    extension = {
+        astro = "astro"
+    }
+})
+
 -- === lspsaga ===
 local saga = require('lspsaga')
 saga.init_lsp_saga {
@@ -83,7 +93,6 @@ vim.keymap.set("n", "<Leader>gp", "<cmd>Lspsaga preview_definition<CR>", { silen
 vim.keymap.set("n", "<Leader>go", "<cmd>LSoutlineToggle<CR>", { silent = true })
 
 -- Float terminal
-local term = require("lspsaga.floaterm")
 vim.keymap.set("n", "<Leader>tt", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
 vim.keymap.set("t", "<Leader>tt", "<C-\\><C-n><cmd>Lspsaga close_floaterm<CR>", { silent = true })
 
@@ -124,6 +133,24 @@ lsp.configure('cssls', {
 })
 lsp.configure('stylelint_lsp', {
   filetypes = { 'css', 'sass', 'scss', 'less' }
+})
+local cmp = require('cmp')
+lsp.setup_nvim_cmp({
+  mapping = {
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
+      if cmp.visible() then
+        local entry = cmp.get_selected_entry()
+	if not entry then
+	  cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+	else
+	  cmp.confirm()
+	end
+      else
+        fallback()
+      end
+    end, {"i","s","c",}),
+  }
 })
 
 -- Finally, run setup
@@ -287,9 +314,5 @@ vim.keymap.set('n', '<Leader>or', '<cmd>OverseerRun<CR>')
 -- === markdown-preview.nvim ===
 vim.keymap.set('n', '<C-p>', '<cmd>MarkdownPreview<CR>')
 
--- === hop.nvim ===
-require('hop').setup()
-vim.api.nvim_set_keymap('', 'f',
-  "<cmd>lua require'hop'.hint_char2({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR })<cr>", {})
-vim.api.nvim_set_keymap('', 'F',
-  "<cmd>lua require'hop'.hint_char2({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR })<cr>", {})
+-- === leap.nvim ===
+require('leap').add_default_mappings()
