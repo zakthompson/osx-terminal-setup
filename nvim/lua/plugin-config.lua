@@ -17,6 +17,9 @@ require('lualine').setup {
   }
 }
 
+-- === mason ===
+require("mason").setup()
+
 -- === nvim-tree ===
 require('nvim-tree').setup()
 vim.keymap.set('n', '<Space>ff', ':NvimTreeToggle<CR>')
@@ -71,9 +74,9 @@ require('nvim-treesitter.configs').setup {
 }
 
 vim.filetype.add({
-    extension = {
-        astro = "astro"
-    }
+  extension = {
+    astro = "astro"
+  }
 })
 
 -- === lspsaga ===
@@ -103,10 +106,18 @@ local lsp = require('lsp-zero')
 lsp.preset('recommended')
 
 -- Enable completion for nvim configs
-lsp.nvim_workspace()
+require('mason-lspconfig').setup({
+  handlers = {
+    lsp.default_setup,
+    lua_ls = function()
+      local lua_opts = lsp.nvim_lua_ls()
+      require('lspconfig').lua_ls.setup(lua_opts)
+    end,
+  },
+})
 
 -- Can remap keys on_attach
-lsp.on_attach(function(client, bufnr)
+lsp.on_attach(function(_, bufnr)
   -- Use Telescope for listing references
   vim.keymap.set('n', 'gr', '<cmd>Telescope lsp_references<CR>', { buffer = bufnr, remap = false })
 
@@ -135,22 +146,22 @@ lsp.configure('stylelint_lsp', {
   filetypes = { 'css', 'sass', 'scss', 'less' }
 })
 local cmp = require('cmp')
-lsp.setup_nvim_cmp({
-  mapping = {
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
     ["<Tab>"] = cmp.mapping(function(fallback)
       -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
       if cmp.visible() then
         local entry = cmp.get_selected_entry()
-	if not entry then
-	  cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-	else
-	  cmp.confirm()
-	end
+        if not entry then
+          cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+        else
+          cmp.confirm()
+        end
       else
         fallback()
       end
-    end, {"i","s","c",}),
-  }
+    end, { "i", "s", "c", }),
+  })
 })
 
 -- Finally, run setup
@@ -299,9 +310,9 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 vim.api.nvim_create_autocmd('User', {
   pattern = 'FormatterPre',
   group = formatGroup,
-  callback = function ()
-    vim.lsp.buf.format({async = false})
-	end
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+  end
 })
 
 -- === overseer.vim ===
