@@ -91,4 +91,7 @@ return require('packer').startup(function(use)
 
   -- Rsync for remote editing
   use { 'kenn7/vim-arsync' }
+
+  -- Pico-8
+  use { 'bakudankun/pico-8.vim' }
 end)

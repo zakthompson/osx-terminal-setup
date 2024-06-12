@@ -109,10 +109,10 @@ lsp.preset('recommended')
 require('mason-lspconfig').setup({
   handlers = {
     lsp.default_setup,
-    lua_ls = function()
-      local lua_opts = lsp.nvim_lua_ls()
-      require('lspconfig').lua_ls.setup(lua_opts)
-    end,
+    -- lua_ls = function()
+    --   local lua_opts = lsp.nvim_lua_ls()
+    --   require('lspconfig').lua_ls.setup(lua_opts)
+    -- end,
   },
 })
 
@@ -329,3 +329,8 @@ vim.keymap.set('n', '<C-p>', '<cmd>MarkdownPreview<CR>')
 
 -- === leap.nvim ===
 require('leap').add_default_mappings()
+
+-- === Pico-8 Config ===
+vim.g.pico8_config = {
+  ['pico8_path'] = '/Applications/PICO-8.app/Contents/MacOS/pico8'
+}

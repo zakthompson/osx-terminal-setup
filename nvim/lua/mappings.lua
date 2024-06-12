@@ -51,3 +51,4 @@ nmap('<C-l>', '<C-w>l')
 
 -- Misc
 nmap('<Leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>')
+nmap('<Leader>p8', '<cmd>:Pico8Run<CR>')
