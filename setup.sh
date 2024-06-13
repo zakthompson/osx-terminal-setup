@@ -6,8 +6,7 @@ yarn global add stylelint eslint eslint_d prettier @fsouza/prettierd
 rustup-init -y
 
 # Neovim setup
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # Install font
 brew tap homebrew/cask-fonts
@@ -17,7 +16,7 @@ brew install --cask font-jetbrains-mono-nerd-font
 chsh -s /usr/local/bin/zsh
 
 # Remove existing configurations
-rm -rf ~/.vim ~/.vimrc ~/.zshrc ~/.config/nvim ~/.config/kitty 2> /dev/null
+rm -rf ~/.vim ~/.vimrc ~/.zshrc ~/.config/nvim ~/.config/kitty 2>/dev/null
 
 # Create neovim directories
 mkdir -p ~/.config ~/.config/nvim ~/.config/kitty
