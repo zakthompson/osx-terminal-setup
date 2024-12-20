@@ -1,12 +1,9 @@
 #!/bin/bash
 
 # Install dependencies
-brew install zsh neovim ag yarn tree-sitter luajit ripgrep rustup fzf typewritten
+brew install zsh neovim ag yarn tree-sitter luajit ripgrep rustup fzf typewritten jordanbaird-ice
 yarn global add stylelint eslint eslint_d prettier @fsouza/prettierd
 rustup-init -y
-
-# Neovim setup
-git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # Install font
 brew tap homebrew/cask-fonts
