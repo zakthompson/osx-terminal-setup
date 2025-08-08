@@ -31,6 +31,7 @@ ln -s $PWD/zshrc ~/.zshrc
 ln -s $PWD/asdfrc ~/.asdfrc
 ln -s $PWD/nvim ~/.config/
 ln -s $PWD/kitty ~/.config/
+ln -s $PWD/wezterm/wezterm.lua ~/.wezterm.lua
 
 # Use nvim for further configuration
 alias vim="nvim"
