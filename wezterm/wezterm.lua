@@ -111,5 +111,18 @@ return {
 		},
 		{ key = "<", mods = "CTRL|SHIFT", action = act.MoveTabRelative(-1) },
 		{ key = ">", mods = "CTRL|SHIFT", action = act.MoveTabRelative(1) },
+		{
+			key = "LeftArrow",
+			mods = "OPT",
+			action = act.SendKey({
+				key = "b",
+				mods = "ALT",
+			}),
+		},
+		{
+			key = "RightArrow",
+			mods = "OPT",
+			action = act.SendKey({ key = "f", mods = "ALT" }),
+		},
 	},
 }
