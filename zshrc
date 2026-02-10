@@ -4,6 +4,9 @@ export PATH=$HOME/bin:/usr/local/bin:/opt/homebrew/bin:$PATH
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# Path to local Claude Code
+export PATH="$HOME/.local/bin:$PATH"
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -87,6 +90,13 @@ else
   export EDITOR='nvim'
 fi
 
+if [ -n "$SSH_CONNECTION" ] && [ -z "$KEYCHAIN_UNLOCKED" ]; then
+  security unlock-keychain ~/Library/Keychains/login.keychain-db
+  export KEYCHAIN_UNLOCKED=true
+fi
+
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
@@ -101,5 +111,8 @@ fi
 alias vim="nvim"
 alias ls='ls -GFhlxort'
 alias hg='history | grep "$@"'
+alias claude-personal="CLAUDE_CONFIG_DIR=~/.claude-personal /Volumes/Data/Users/zak/.local/bin/claude"
+alias claude-work="CLAUDE_CONFIG_DIR=~/.claude-work /Volumes/Data/Users/zak/.local/bin/claude"
+alias claude="echo 'Use specific plan: claude-personal or claude-work'"
 
 eval "$(starship init zsh)"

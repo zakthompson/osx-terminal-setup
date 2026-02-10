@@ -6,7 +6,7 @@ local function is_nvim(pane)
 end
 
 return {
-	font = wezterm.font("JetBrainsMono Nerd Font", { weight = "Bold" }),
+	font = wezterm.font("JetBrains Mono", { weight = "Bold" }),
 
 	wezterm.on("window-config-reloaded", function(window, pane)
 		window:toast_notification("wezterm", "configuration reloaded!", nil, 4000)

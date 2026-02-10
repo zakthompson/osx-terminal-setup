@@ -7,16 +7,16 @@ rustup-init -y
 
 # Install casks
 brew tap homebrew/cask-fonts
-brew install --cask font-jetbrains-mono-nerd-font kitty slack discord moonlight craft notion audacity dropbox localsend transmission
+brew install --cask font-jetbrains-mono-nerd-font slack discord moonlight craft notion audacity dropbox localsend transmission
 
 # Set zsh as default shell
 chsh -s /usr/local/bin/zsh
 
 # Remove existing configurations
-rm -rf ~/.vim ~/.vimrc ~/.zshrc ~/.config/nvim ~/.config/kitty 2>/dev/null
+rm -rf ~/.vim ~/.vimrc ~/.zshrc ~/.config/nvim 2>/dev/null
 
 # Create neovim directories
-mkdir -p ~/.config ~/.config/nvim ~/.config/kitty
+mkdir -p ~/.config ~/.config/nvim
 
 # Install Oh My Zsh and themes/plugins
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
@@ -30,7 +30,6 @@ touch ~/.hushlogin
 ln -s $PWD/zshrc ~/.zshrc
 ln -s $PWD/asdfrc ~/.asdfrc
 ln -s $PWD/nvim ~/.config/
-ln -s $PWD/kitty ~/.config/
 ln -s $PWD/wezterm/wezterm.lua ~/.wezterm.lua
 
 # Use nvim for further configuration
